@@ -412,7 +412,12 @@
               <span>Recordar mis datos para futuras solicitudes (Guardar en Cookies)</span>
             </label>
           </div>
-
+          <!-- Trampa para bots: un humano no ve este campo -->
+          <input type="text" id="hp-web" tabindex="-1" autocomplete="off" aria-hidden="true"
+                 style="position:absolute; left:-9999px;">
+          
+          <div class="g-recaptcha" data-sitekey="6LcKPAAuAAAAANldcFZSP37cf3wZTfks5zxqInoY" data-theme="dark" style="margin-bottom:16px;"></div>
+          
           <button type="submit" class="btn-primary btn-submit">
             <i class="fa-solid fa-receipt"></i> Generar Ticket de Reparación
           </button>
@@ -465,6 +470,7 @@
   <!-- JS Script -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="js/script.js"></script>
 </body>
 </html>
