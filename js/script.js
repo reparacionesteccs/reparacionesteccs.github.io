@@ -373,6 +373,24 @@ let lastTicket = null;
 async function handleFormSubmit(event) {
   event.preventDefault();
 
+  // Bot: rellenó el campo trampa
+  if (document.getElementById('hp-web').value) return;
+  
+  // Máximo un envío por minuto desde este navegador
+  let last = 0;
+  try { last = Number(localStorage.getItem('lastSend') || 0); } catch (e) {}
+  if (Date.now() - last < 60000) {
+    alert('Espera un minuto antes de enviar otra solicitud.');
+    return;
+  }
+  
+  // Captcha resuelto
+  const captcha = grecaptcha.getResponse();
+  if (!captcha) {
+    alert('Marca la casilla "No soy un robot".');
+    return;
+  }
+
   const tipo = document.getElementById('dev-tipo').value;
   const now  = new Date();
 
@@ -407,29 +425,35 @@ async function handleFormSubmit(event) {
       ticket_id: ticket.id, fecha: ticket.fecha, nombre: ticket.nombre,
       telefono: ticket.tel, email: ticket.email,
       dispositivo: ticket.dispositivo, modelo: ticket.modelo,
-      descripcion: ticket.desc, presupuesto: budgetText
+      descripcion: ticket.desc, presupuesto: budgetText,
+      'g-recaptcha-response': captcha
     });
   } catch (err) {
     console.error(err);
     alert('No se pudo enviar la solicitud. Inténtalo de nuevo o escríbeme por correo.');
     btn.disabled = false;
     btn.innerHTML = btnHTML;
+    grecaptcha.reset();
     return;
   }
 
-  btn.disabled = false;
-  btn.innerHTML = btnHTML;
-
-  if (document.getElementById('save-cookies').checked) {
-    setCookie('usr_nombre', ticket.nombre);
-    setCookie('usr_telefono', ticket.tel);
-    setCookie('usr_email', ticket.email);
+    btn.disabled = false;
+    btn.innerHTML = btnHTML;
+  
+    // Recordar el envío (límite de 1 por minuto) y reiniciar el captcha
+    try { localStorage.setItem('lastSend', String(Date.now())); } catch (e) {}
+    grecaptcha.reset();
+  
+    if (document.getElementById('save-cookies').checked) {
+      setCookie('usr_nombre', ticket.nombre);
+      setCookie('usr_telefono', ticket.tel);
+      setCookie('usr_email', ticket.email);
+    }
+  
+    lastTicket = ticket;
+    fillTicket(ticket);
+    document.getElementById('ticket-modal').classList.remove('hidden');
   }
-
-  lastTicket = ticket;
-  fillTicket(ticket);
-  document.getElementById('ticket-modal').classList.remove('hidden');
-}
 
 function fillTicket(t) {
   const set = (id, v) => document.getElementById(id).textContent = v;
