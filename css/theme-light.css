@@ -1,0 +1,42 @@
+/* === TEMA CLARO (se activa con <html data-theme="light">) === */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --md-sys-color-primary: #2F5EA8;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #D6E3FF;
+  --md-sys-color-on-primary-container: #001B3E;
+  --md-sys-color-primary-hover: #1F4A8C;
+
+  --md-sys-color-secondary: #565F71;
+  --md-sys-color-secondary-container: #DAE2F9;
+  --md-sys-color-on-secondary-container: #131C2B;
+
+  --md-sys-color-tertiary: #7B4E84;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #FDD7FF;
+
+  --md-sys-color-background: #F9F9FF;
+  --md-sys-color-on-background: #191C20;
+
+  --md-sys-color-surface: #F9F9FF;
+  --md-sys-color-surface-low: #F3F3FA;
+  --md-sys-color-surface-container: #FFFFFF;
+  --md-sys-color-surface-high: #E7E8EE;
+  --md-sys-color-surface-highest: #E2E2E9;
+
+  --md-sys-color-on-surface: #191C20;
+  --md-sys-color-on-surface-variant: #44474E;
+  --md-sys-color-outline: #C4C6D0;
+  --md-sys-color-outline-focus: #74777F;
+
+  --md-sys-color-error: #BA1A1A;
+
+  /* Sombras y brillos */
+  --shadow-sm: rgba(0, 0, 0, 0.08);
+  --shadow-md: rgba(0, 0, 0, 0.12);
+  --shadow-lg: rgba(0, 0, 0, 0.2);
+  --glow-text: rgba(47, 94, 168, 0);
+  --glow-soft: rgba(47, 94, 168, 0.18);
+  --glow-strong: rgba(47, 94, 168, 0.3);
+}

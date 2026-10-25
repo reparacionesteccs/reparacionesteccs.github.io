@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reparación de Móviles, Tablets y PCs | Presupuesto Sin Compromiso</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Zen Dots + Cormorant SC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&family=Zen+Dots&display=swap" rel="stylesheet">
+  
+  <!-- Aplicar el tema guardado antes de pintar (evita parpadeo) -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.setAttribute('data-theme', saved || (prefersLight ? 'light' : 'dark'));
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <!-- Stylesheets: primero los temas (variables), después los estilos generales -->
+  <link rel="stylesheet" href="css/theme-dark.css">
+  <link rel="stylesheet" href="css/theme-light.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link id="logo_pestaña" rel="icon" type="image/png" href="img/logo.png">
+</head>
+<body>
+
+  <!-- HEADER ORIGINAL CONSERVADO -->
+  <header>
+    <!-- Bloque Izquierda: Logo + Botón/Caja de información -->
+    <div class="header-left">
+      <img class="logo logo-dark"  src="img/logo.png"       alt="Logotipo del servicio de reparación" onclick="switchTab('inicio')">
+      <img class="logo logo-light" src="img/logo-light.png" alt="Logotipo del servicio de reparación" onclick="switchTab('inicio')">  
+      <!-- Caja de info: cerrada por defecto con atributo tabindex para interacción por clic o foco -->
+      <div class="header-info-box" tabindex="0">
+        <i class="fa-solid fa-circle-info info-icon"></i>
+        <p class="info-text">Reparamos, limpiamos y ponemos a prueba tus dispositivos.</p>
+      </div>
+    </div>
+
+    <!-- Bloque Centro: Título con tamaño flexible controlado -->
+    <span class="title-main">Reparación de Dispositivos Electrónicos</span>
+
+    <!-- Bloque Derecha: Botón de cambio de tema -->
+    <div class="header-right">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Cambiar a modo claro" title="Cambiar tema">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN DINÁMICA CON BOTÓN DESPLEGABLE EN MÓVIL -->
+  <nav id="main-nav">
+    <button class="menu-toggle" aria-label="Abrir menú de navegación" onclick="toggleMobileMenu()">
+      <i class="fa-solid fa-bars"></i> Menú
+    </button>
+    <div class="nav-links">
+      <div data-target="inicio" class="nav-item active"><i class="fa-solid fa-house"></i> INICIO</div>
+      <div data-target="servicios" class="nav-item"><i class="fa-solid fa-screwdriver-wrench"></i> SERVICIOS</div>
+      <div data-target="casos" class="nav-item"><i class="fa-solid fa-images"></i> CASOS PRÁCTICOS</div>
+      <div data-target="tarifas" class="nav-item"><i class="fa-solid fa-calculator"></i> TARIFAS & CALCULADORA</div>
+      <div data-target="contacto" class="nav-item"><i class="fa-solid fa-paper-plane"></i> SOLICITAR REPARACIÓN</div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL (SPA) -->
+  <main>
+
+    <!-- SECCIÓN 1: INICIO / PRESENTACIÓN -->
+    <section id="sec-inicio" class="app-section active-section">
+      <div class="hero-banner">
+        <div class="hero-content">
+          <span class="badge"><i class="fa-solid fa-microchip"></i> Tecnología y Reparaciones</span>
+          <h2>Servicio Técnico </h2>
+          <p>Me gusta reparar y solucionar problemas tecnológicos. Ofrezco mis conocimientos y experiencia para ayudar con ordenadores, móviles, tablets y otros dispositivos, buscando siempre una solución práctica y económica.</p>
+          <div class="hero-buttons">
+            <button class="btn-primary" onclick="switchTab('contacto')"><i class="fa-solid fa-wrench"></i> Pedir Reparación</button>
+            <button class="btn-secondary" onclick="switchTab('tarifas')"><i class="fa-solid fa-coins"></i> Calcular Coste</button>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="img/presentacion.jpg" alt="Taller de reparación">
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <i class="fa-solid fa-user-gear card-icon"></i>
+          <h3>Sobre mí</h3>
+          <p>Mi nombre es <strong>Kristiyan</strong>. La reparación tecnológica es uno de mis hobbies, y quiero aprovechar mis conocimientos para ayudar a quien lo necesite. Realizo un diagnóstico previo y busco soluciones prácticas, intentando reparar solo lo necesario y en la mayor brevedad posible.</p>
+        </div>
+
+        <div class="info-card">
+          <i class="fa-solid fa-shield-halved card-icon"></i>
+          <h3>Transparencia & Compromiso</h3>
+          <p>Antes de realizar cualquier reparación, reviso el dispositivo y explico el problema y las posibles soluciones. Busco siempre evitar gastos innecesarios y utilizar solo las piezas necesarias.</p>        
+        </div>
+
+        <div class="info-card">
+          <i class="fa-solid fa-clock-rotate-left card-icon"></i>
+          <h3>Tiempos de Respuesta</h3>
+          <p>En las reparaciones sencillas (pantallas, baterías, puertos de carga), el tiempo depende de cuándo estén disponibles las piezas, más un máximo de 24 h para repararlo. En el resto de casos, como diagnósticos, limpiezas o atención al cliente, no serán más de 48 h desde que te atiendo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: SERVICIOS ("QUÉ OFREZCO") -->
+    <section id="sec-servicios" class="app-section">
+      <div class="section-title">
+        <h2>¿Qué ofrezco?</h2>
+        <p>Reparación y diagnóstico general de varios dispositivos electrónicos, entre ellos:</p>
+      </div>
+
+      <div class="services-container">
+
+        <article class="service-card">
+          <div class="service-header">
+            <i class="fa-solid fa-mobile-screen-button service-icon"></i>
+            <h3>Smartphones / Móviles</h3>
+          </div>
+          <p>Reparación multimarca (Apple iPhone, Samsung Galaxy, Xiaomi, etc.).</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Sustitución de pantallas OLED / LCD</li>
+            <li><i class="fa-solid fa-check"></i> Cambio de batería con verificación de ciclos</li>
+            <li><i class="fa-solid fa-check"></i> Reemplazo de puerto de carga (USB-C / Lightning)</li>
+            <li><i class="fa-solid fa-check"></i> Cambio de carcasa y accesorios</li>
+            <li><i class="fa-solid fa-check"></i> Reemplazo de piezas (cámara, sensores, etc.)</li>
+          </ul>
+          <button class="btn-card" onclick="preselectDevice('movil')">Solicitar para Móvil</button>
+        </article>
+
+        <article class="service-card">
+          <div class="service-header">
+            <i class="fa-solid fa-laptop service-icon"></i>
+            <h3>PCs & Ordenadores Portátiles</h3>
+          </div>
+          <p>Mantenimiento preventivo, limpieza, optimización de velocidad y reparación física.</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Mantenimiento térmico (Pasta térmica + Limpieza)</li>
+            <li><i class="fa-solid fa-check"></i> Ampliación de almacenamiento SSD y memoria RAM</li>
+            <li><i class="fa-solid fa-check"></i> Reparación de alimentación DC en placa base</li>
+          </ul>
+          <button class="btn-card" onclick="preselectDevice('pc')">Solicitar para PC</button>
+        </article>
+
+        <article class="service-card">
+          <div class="service-header">
+            <i class="fa-solid fa-tablet-screen-button service-icon"></i>
+            <h3>Tablets & iPads</h3>
+          </div>
+          <p>Reparación de cristales táctiles, digitalizadores y baterías en tablets.</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Sustitución de pantalla táctil o cristal</li>
+            <li><i class="fa-solid fa-check"></i> Cambio de batería interna</li>
+            <li><i class="fa-solid fa-check"></i> Reemplazo de puerto de carga (USB-C / Lightning)</li>
+            <li><i class="fa-solid fa-check"></i> Cambio de carcasa y accesorios</li>
+          </ul>
+          <button class="btn-card" onclick="preselectDevice('tablet')">Solicitar para Tablet</button>
+        </article>
+
+      </div>
+    </section>
+
+        <!-- SECCIÓN 3: CASOS PRÁCTICOS (PRÓXIMAMENTE) -->
+    <section id="sec-casos" class="app-section">
+      <div class="section-title">
+        <h2>Casos Prácticos</h2>
+        <p>Aquí publicaré mis próximas reparaciones, con fotos del <strong>antes</strong> y el <strong>después</strong>.</p>
+      </div>
+
+      <div class="coming-soon">
+        <i class="fa-solid fa-screwdriver-wrench coming-icon"></i>
+        <span class="badge"><i class="fa-solid fa-hourglass-half"></i> Próximamente</span>
+        <h3>¿Quieres que tu dispositivo sea el primero?</h3>
+        <p>Estoy empezando a recopilar más casos. Si me dejas reparar tu dispositivo, con tu permiso lo fotografiaré antes y después para mostrarlo aquí.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary" onclick="switchTab('contacto')"><i class="fa-solid fa-wrench"></i> Pedir Reparación</button>
+          <button class="btn-secondary" onclick="switchTab('tarifas')"><i class="fa-solid fa-coins"></i> Calcular Coste</button>
+        </div>
+      </div>
+
+      <!--
+      ====== VERSIÓN ORIGINAL (slider Antes/Después) ======
+      Para restaurarla: borra el bloque ".coming-soon" de arriba.
+
+      <div class="cases-grid">
+
+        <div class="case-card">
+          <h3>Mantenimiento Térmico PS5 (Sobrecalentamiento)</h3>
+          <p>Consola con apagados repentinos. Se realizó limpieza con desoxidante y renovación de metal líquido.</p>
+          <div class="img-comp-container" id="case-slider-1">
+            <div class="img-comp-img img-after">
+              <img src="img/caso1-despues.jpg" alt="Consola Reparada">
+            </div>
+            <div class="img-comp-img img-before">
+              <img src="img/caso1-antes.jpg" alt="Consola Sucia">
+            </div>
+            <div class="img-comp-slider-handle"><i class="fa-solid fa-left-right"></i></div>
+          </div>
+          <div class="slider-labels">
+            <span>← ANTES (Suciedad)</span>
+            <span>DESPUÉS (Limpio) →</span>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <h3>Sustitución Pantalla OLED en Smartphone</h3>
+          <p>Pantalla destrozada por caída. Reemplazo completo por panel original recuperando el 100% de la nitidez táctil.</p>
+          <div class="img-comp-container" id="case-slider-2">
+            <div class="img-comp-img img-after">
+              <img src="img/caso2-despues.jpg" alt="Móvil Reparado">
+            </div>
+            <div class="img-comp-img img-before">
+              <img src="img/caso2-antes.jpg" alt="Móvil Roto">
+            </div>
+            <div class="img-comp-slider-handle"><i class="fa-solid fa-left-right"></i></div>
+          </div>
+          <div class="slider-labels">
+            <span>← ANTES (Roto)</span>
+            <span>DESPUÉS (Nuevo) →</span>
+          </div>
+        </div>
+
+      </div>
+    -->
+    </section>
+
+    <!-- SECCIÓN 4: CÓMO SE COBRA Y CALCULADORA -->
+    <section id="sec-tarifas" class="app-section">
+      <div class="section-title">
+        <h2>¿Cómo se calcula el precio?</h2>
+        <p>Transparencia total sin costes ocultos. Tu presupuesto se calcula según la siguiente regla:</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-step">
+          <span class="step-num">3</span>
+          <h4>Plazo de Entrega</h4>
+          <p>Sin recargos por urgencia. El tiempo depende de lo que tarden en llegar las piezas, y te aviso en cuanto las pida.</p>
+        </div>
+        <div class="formula-operator">+</div>
+        <div class="formula-step">
+          <span class="step-num">2</span>
+          <h4>Precio de Pieza</h4>
+          <p>El coste exacto del repuesto sustituido (Pantalla, Batería, Conector, etc.) con precio al costo.</p>
+        </div>
+        <div class="formula-operator">+</div>
+        <div class="formula-step">
+          <span class="step-num">3</span>
+          <h4>Nivel de Urgencia</h4>
+          <p>Recargo según la rapidez requerida (Servicio Normal sin recargo, Urgencia 24h o Inmediata el mismo día).</p>
+        </div>
+      </div>
+
+      <div class="calc-wrapper">
+        <div class="calc-inputs">
+          <h3><i class="fa-solid fa-sliders"></i> Calculadora Interactiva de Presupuestos</h3>
+
+          <div class="form-group">
+            <label for="calc-device">1. Tipo de Dispositivo</label>
+            <select id="calc-device" onchange="onCalcDeviceChange()">
+              <option value="movil">Móvil / Smartphone</option>
+              <option value="tablet">Tablet / iPad</option>
+              <option value="pc">PC de sobremesa</option>
+              <option value="portatil">Portátil</option>
+              <option value="otro">Otro dispositivo</option>
+            </select>
+          </div>
+
+          <div class="form-group is-hidden" id="calc-otro-group">
+            <label for="calc-otro">¿Qué dispositivo es?</label>
+            <input type="text" id="calc-otro" placeholder="Ej. Smartwatch, auriculares, altavoz...">
+          </div>
+
+          <div class="form-group">
+            <label>2. Tipo de Reparación (puedes marcar varias)</label>
+            <div id="calc-repair-list" class="check-list"></div>
+          </div>
+
+          <div class="form-group">
+            <label>3. Estimación Coste total de las Piezas (€)</label>
+            <div class="range-box">
+              <input type="range" id="calc-piece-range" min="0" max="200" step="5" value="40" oninput="runCalculator()">
+              <span id="calc-piece-val" class="range-badge">40 €</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>4. ¿Quién aporta la pieza?</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="calc-piece-source" value="yo" checked onchange="runCalculator()">
+                <span>La pido yo (se suma su coste)</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="calc-piece-source" value="cliente" onchange="runCalculator()">
+                <span>La aporto yo, el cliente (sin coste de pieza)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-receipt">
+          <h3>Resumen del Presupuesto</h3>
+          <div class="receipt-row">
+            <span>Mano de Obra Estimada:</span>
+            <strong id="rec-labor">0.00 €</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Coste de la Pieza:</span>
+            <strong id="rec-piece">0.00 €</strong>
+          </div>
+          <hr>
+          <div class="receipt-row total-row">
+            <span>Total Estimado (Aprox):</span>
+            <strong id="rec-total">0.00 €</strong>
+          </div>
+          <p class="receipt-note">* Presupuesto final confirmado tras revisar el dispositivo. El plazo depende de la llegada de las piezas.</p>
+          <button class="btn-primary w-full" onclick="transferCalcToForm()"><i class="fa-solid fa-calendar-check"></i> Solicitar con este Presupuesto</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: FORMULARIO Y TICKET DE REPARACIÓN -->
+    <section id="sec-contacto" class="app-section">
+      <div class="section-title">
+        <h2>Solicitud de Reparación</h2>
+        <p>Rellena los datos para registrar tu dispositivo y enviarnos la solicitud.</p>
+      </div>
+
+      <div class="form-container">
+        <form id="repair-form" onsubmit="handleFormSubmit(event)">
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="usr-nombre">Nombre Completo *</label>
+              <input type="text" id="usr-nombre" required placeholder="Ej. Carlos Gómez">
+            </div>
+
+            <div class="form-group">
+              <label for="usr-telefono">Teléfono de Contacto *</label>
+              <input type="tel" id="usr-telefono" required placeholder="Ej. 612 345 678">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="usr-email">Correo Electrónico *</label>
+            <input type="email" id="usr-email" required placeholder="ejemplo@correo.com">
+          </div>
+
+          <hr class="form-divider">
+
+                    <div class="form-grid">
+            <div class="form-group">
+              <label for="dev-tipo">Tipo de Dispositivo *</label>
+              <select id="dev-tipo" onchange="updateBrandsAndModels()" required>
+                <option value="movil">Móvil / Smartphone</option>
+                <option value="tablet">Tablet / iPad</option>
+                <option value="pc">PC de sobremesa</option>
+                <option value="portatil">Portátil</option>
+                <option value="otro">Otro dispositivo</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="dev-marca-group">
+              <label for="dev-marca">Marca *</label>
+              <select id="dev-marca" required></select>
+            </div>
+          </div>
+
+          <div class="form-group is-hidden" id="dev-otro-group">
+            <label for="dev-otro">¿Qué dispositivo es? *</label>
+            <input type="text" id="dev-otro" placeholder="Ej. Smartwatch, impresora, altavoz...">
+          </div>
+
+          <div class="form-group">
+            <label for="dev-modelo">Modelo Específico *</label>
+            <input type="text" id="dev-modelo" required placeholder="Ej. iPhone 13 / Asus ROG Strix / Galaxy Tab S8">
+          </div>
+
+          <div class="form-group">
+            <label for="dev-desc">Descripción del Problema / Avería *</label>
+            <textarea id="dev-desc" rows="4" required placeholder="Detalla los síntomas: no enciende, cristal roto, pantalla en negro, problemas de carga, sobrecalentamiento..."></textarea>
+          </div>
+
+          <div id="budget-box" class="budget-box is-hidden">
+            <div class="budget-head">
+              <strong><i class="fa-solid fa-calculator"></i> Presupuesto estimado de la calculadora</strong>
+              <button type="button" class="budget-remove" onclick="clearBudget()" aria-label="Quitar presupuesto">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <p id="budget-repairs"></p>
+            <p>Mano de obra: <span id="budget-labor"></span> · Pieza: <span id="budget-piece"></span></p>
+            <p><strong>Total aprox.: <span id="budget-total"></span></strong></p>
+            <small>Precio aproximado: puede ser mayor o menor tras revisar el dispositivo.</small>
+          </div>
+
+          <!-- CHECKBOX DE GUARDADO EN COOKIES -->
+          <div class="form-group checkbox-group">
+            <label class="radio-option">
+              <input type="checkbox" id="save-cookies" checked>
+              <span>Recordar mis datos para futuras solicitudes (Guardar en Cookies)</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary btn-submit">
+            <i class="fa-solid fa-receipt"></i> Generar Ticket de Reparación
+          </button>
+        </form>
+      </div>
+
+      <!-- TICKET GENERADO (INICIALMENTE OCULTO) -->
+      <div id="ticket-modal" class="ticket-wrapper hidden">
+        <div class="ticket-card" id="ticket-content">
+          <div class="ticket-header">
+            <h3><i class="fa-solid fa-microchip"></i> TICKET DE ORDEN</h3>
+            <span id="ticket-id">#TF-0000</span>
+          </div>
+          <div class="ticket-body">
+            <p><strong>Fecha:</strong> <span id="tkt-fecha">--/--/----</span></p>
+            <p><strong>Cliente:</strong> <span id="tkt-nombre">--</span></p>
+            <p><strong>Contacto:</strong> <span id="tkt-tel">--</span> (<span id="tkt-email">--</span>)</p>
+            <hr>
+            <p><strong>Dispositivo:</strong> <span id="tkt-dispositivo">--</span></p>
+            <p><strong>Modelo:</strong> <span id="tkt-modelo">--</span></p>
+            <div id="tkt-budget-block" class="is-hidden">
+              <hr>
+              <p><strong>Presupuesto estimado (aprox.):</strong></p>
+              <p id="tkt-b-repairs"></p>
+              <p>Mano de obra: <span id="tkt-b-labor"></span> · Pieza: <span id="tkt-b-piece"></span></p>
+              <p><strong>Total aprox.: <span id="tkt-b-total"></span></strong></p>
+              <p class="receipt-note">* Precio aproximado, sujeto a revisión del dispositivo.</p>
+            </div>
+            <p><strong>Descripción de Avería:</strong></p>
+            <blockquote id="tkt-desc">--</blockquote>
+          </div>
+          <div class="ticket-footer">
+            <button class="btn-secondary" onclick="downloadTicketPDF()"><i class="fa-solid fa-file-pdf"></i> Descargar PDF</button>
+            <button class="btn-secondary" onclick="copyTicketToClipboard()"><i class="fa-solid fa-copy"></i> Copiar Resumen</button>
+            <button class="btn-primary" onclick="closeTicket()"><i class="fa-solid fa-check"></i> Finalizar</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Contacto Directo: <a href="mailto:reparacionesteccs@gmail.com">reparacionesteccs@gmail.com</a> | Respuesta en menos de 24h</p>
+    <p>&copy; 2026 Kristiyan Donchev. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- JS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

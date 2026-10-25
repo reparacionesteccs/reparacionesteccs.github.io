@@ -1,0 +1,42 @@
+/* === TEMA OSCURO (por defecto) === */
+:root {
+  color-scheme: dark;
+
+  --md-sys-color-primary: #749ae6;
+  --md-sys-color-on-primary: #0A305F;
+  --md-sys-color-primary-container: #274777;
+  --md-sys-color-on-primary-container: #D6E3FF;
+  --md-sys-color-primary-hover: #c2d8ff;
+
+  --md-sys-color-secondary: #AAC7FF;
+  --md-sys-color-secondary-container: #284777;
+  --md-sys-color-on-secondary-container: #D7E3FF;
+
+  --md-sys-color-tertiary: #E8B5EF;
+  --md-sys-color-on-tertiary: #472150;
+  --md-sys-color-tertiary-container: #5F3768;
+
+  --md-sys-color-background: #111318;
+  --md-sys-color-on-background: #E2E2E9;
+
+  --md-sys-color-surface: #111318;
+  --md-sys-color-surface-low: #191C20;
+  --md-sys-color-surface-container: #1D2024;
+  --md-sys-color-surface-high: #282A2F;
+  --md-sys-color-surface-highest: #33353A;
+
+  --md-sys-color-on-surface: #E2E2E9;
+  --md-sys-color-on-surface-variant: #C4C6D0;
+  --md-sys-color-outline: #44474E;
+  --md-sys-color-outline-focus: #8E9099;
+
+  --md-sys-color-error: #FFB4AB;
+
+  /* Sombras y brillos */
+  --shadow-sm: rgba(0, 0, 0, 0.4);
+  --shadow-md: rgba(0, 0, 0, 0.5);
+  --shadow-lg: rgba(0, 0, 0, 0.7);
+  --glow-text: rgba(170, 199, 255, 0.3);
+  --glow-soft: rgba(170, 199, 255, 0.25);
+  --glow-strong: rgba(170, 199, 255, 0.4);
+}
