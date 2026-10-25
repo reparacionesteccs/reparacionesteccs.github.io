@@ -408,12 +408,13 @@ async function handleFormSubmit(event) {
     budget: calcBudget ? { ...calcBudget } : null
   };
 
-  const budgetText = ticket.budget
-  ? `<b>Reparaciones:</b> ${ticket.budget.repairs.join(', ') || 'Sin marcar'}<br>` +
-    `<b>Mano de obra:</b> ${fmtEUR(ticket.budget.labor)} | <b>Pieza:</b> ` +
-    `${ticket.budget.ownPiece ? 'la aporta el cliente' : fmtEUR(ticket.budget.piece)}<br>` +
-    `<b>Total aprox.:</b> ${fmtEUR(ticket.budget.total)}`
-  : 'Sin presupuesto de calculadora';
+  const b = ticket.budget;
+  const presupuestoVars = {
+    presu_reparaciones: b ? (b.repairs.join(', ') || 'Sin marcar') : 'Sin presupuesto de calculadora',
+    presu_mano_obra: b ? fmtEUR(b.labor) : '-',
+    presu_pieza: b ? (b.ownPiece ? 'la aporta el cliente' : fmtEUR(b.piece)) : '-',
+    presu_total: b ? fmtEUR(b.total) : '-'
+  };
 
   const btn = event.target.querySelector('.btn-submit');
   const btnHTML = btn.innerHTML;
@@ -425,9 +426,11 @@ async function handleFormSubmit(event) {
       ticket_id: ticket.id, fecha: ticket.fecha, nombre: ticket.nombre,
       telefono: ticket.tel, email: ticket.email,
       dispositivo: ticket.dispositivo, modelo: ticket.modelo,
-      descripcion: ticket.desc, presupuesto: budgetText,
+      descripcion: ticket.desc,
+      ...presupuestoVars,
       'g-recaptcha-response': captcha
-    });
+  });
+    
   } catch (err) {
     console.error(err);
     alert('No se pudo enviar la solicitud. Inténtalo de nuevo o escríbeme por correo.');
