@@ -1143,7 +1143,10 @@ footer a {
      letter-spacing: 0.08em;
    }
 
-   .cookie-banner {
+  
+}
+
+ .cookie-banner {
   position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
   z-index: 2000; width: min(640px, calc(100% - 32px));
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
@@ -1154,4 +1157,3 @@ footer a {
   }
   .cookie-banner p { margin: 0; flex: 1 1 240px; font-size: 1rem; }
   .cookie-banner div { display: flex; gap: 8px; }
-}

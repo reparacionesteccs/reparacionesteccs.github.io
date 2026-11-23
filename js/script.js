@@ -686,7 +686,11 @@ async function downloadTicketPDF() {
     doc.text(`reparacionesteccs@gmail.com · Guarda este ticket (${t.id}) para cualquier consulta`, W / 2, H - 9, { align: 'center' });
   }
 
-  function setConsent(value) {
+
+  doc.save(`Ticket-${t.id.replace('#', '')}.pdf`);
+}
+
+function setConsent(value) {
   try { localStorage.setItem('cookie_consent', value); } catch (e) {}
   document.getElementById('cookie-banner').classList.add('is-hidden');
     if (value === 'rejected') {
@@ -694,6 +698,3 @@ async function downloadTicketPDF() {
         document.cookie = `${n}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`);
     }
   }
-
-  doc.save(`Ticket-${t.id.replace('#', '')}.pdf`);
-}
