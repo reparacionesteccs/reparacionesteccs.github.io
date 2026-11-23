@@ -14,6 +14,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&family=Zen+Dots&display=swap" rel="stylesheet">
   
   <!-- Aplicar el tema guardado antes de pintar (evita parpadeo) -->
+  <div id="cookie-banner" class="cookie-banner is-hidden">
+  <p>Uso cookies solo para recordar tus datos en el formulario si tú lo eliges. No uso cookies de publicidad ni de seguimiento.</p>
+  <div>
+    <button class="btn-secondary" onclick="setConsent('rejected')">Rechazar</button>
+    <button class="btn-primary" onclick="setConsent('accepted')">Aceptar</button>
+  </div>
+</div>
   <script>
     (function () {
       try {

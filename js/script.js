@@ -93,6 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof loadFormCookies === 'function') {
     loadFormCookies();
   }
+
+  let consent = null;
+  try { consent = localStorage.getItem('cookie_consent'); } catch (e) {}
+  if (!consent) document.getElementById('cookie-banner').classList.remove('is-hidden');
 });
 
 // 5. Slider comparador Antes / Después
@@ -375,7 +379,7 @@ async function handleFormSubmit(event) {
 
   // Bot: rellenó el campo trampa
   if (document.getElementById('hp-web').value) return;
-  
+
   // Máximo un envío por minuto desde este navegador
   let last = 0;
   try { last = Number(localStorage.getItem('lastSend') || 0); } catch (e) {}
@@ -383,7 +387,7 @@ async function handleFormSubmit(event) {
     alert('Espera un minuto antes de enviar otra solicitud.');
     return;
   }
-  
+
   // Captcha resuelto
   const captcha = grecaptcha.getResponse();
   if (!captcha) {
@@ -429,8 +433,7 @@ async function handleFormSubmit(event) {
       descripcion: ticket.desc,
       ...presupuestoVars,
       'g-recaptcha-response': captcha
-  });
-    
+    });
   } catch (err) {
     console.error(err);
     alert('No se pudo enviar la solicitud. Inténtalo de nuevo o escríbeme por correo.');
@@ -440,23 +443,26 @@ async function handleFormSubmit(event) {
     return;
   }
 
-    btn.disabled = false;
-    btn.innerHTML = btnHTML;
-  
-    // Recordar el envío (límite de 1 por minuto) y reiniciar el captcha
-    try { localStorage.setItem('lastSend', String(Date.now())); } catch (e) {}
-    grecaptcha.reset();
-  
-    if (document.getElementById('save-cookies').checked) {
-      setCookie('usr_nombre', ticket.nombre);
-      setCookie('usr_telefono', ticket.tel);
-      setCookie('usr_email', ticket.email);
-    }
-  
-    lastTicket = ticket;
-    fillTicket(ticket);
-    document.getElementById('ticket-modal').classList.remove('hidden');
+  btn.disabled = false;
+  btn.innerHTML = btnHTML;
+
+  // Recordar el envío (límite de 1 por minuto) y reiniciar el captcha
+  try { localStorage.setItem('lastSend', String(Date.now())); } catch (e) {}
+  grecaptcha.reset();
+
+  // Cookies: solo si el usuario lo marca y no ha rechazado el banner
+  let rejected = false;
+  try { rejected = localStorage.getItem('cookie_consent') === 'rejected'; } catch (e) {}
+  if (document.getElementById('save-cookies').checked && !rejected) {
+    setCookie('usr_nombre', ticket.nombre);
+    setCookie('usr_telefono', ticket.tel);
+    setCookie('usr_email', ticket.email);
   }
+
+  lastTicket = ticket;
+  fillTicket(ticket);
+  document.getElementById('ticket-modal').classList.remove('hidden');
+}
 
 function fillTicket(t) {
   const set = (id, v) => document.getElementById(id).textContent = v;
@@ -678,6 +684,15 @@ async function downloadTicketPDF() {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...GREY);
     doc.text(`reparacionesteccs@gmail.com · Guarda este ticket (${t.id}) para cualquier consulta`, W / 2, H - 9, { align: 'center' });
+  }
+
+  function setConsent(value) {
+  try { localStorage.setItem('cookie_consent', value); } catch (e) {}
+  document.getElementById('cookie-banner').classList.add('is-hidden');
+    if (value === 'rejected') {
+      ['usr_nombre', 'usr_telefono', 'usr_email'].forEach(n =>
+        document.cookie = `${n}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`);
+    }
   }
 
   doc.save(`Ticket-${t.id.replace('#', '')}.pdf`);
